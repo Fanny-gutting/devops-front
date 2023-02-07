@@ -1,0 +1,33 @@
+{
+  "builders": [
+      {
+        "type": "azure-arm",
+        "client_id": "98439127-4948-4e20-a229-df280b1b5c97",
+        "client_secret": "Xdc8Q~WzLQAx0pSPe7HB58NHx~BTfuBO3OF9PagJ",
+        "tenant_id": "901cb4ca-b862-4029-9306-e5cd0f6d9f86",
+        "subscription_id": "c6f0caf7-cedc-4c43-8e87-022f0c6c4295",
+        "managed_image_resource_group_name": "devops-packer",
+        "build_resource_group_name": "devops-packer",
+        "managed_image_name": "nginx-nic",
+        "os_type": "Linux",
+        "image_publisher": "Canonical",
+        "image_offer": "UbuntuServer",
+        "image_sku": "18.04-LTS",
+        "communicator": "ssh",
+        "ssh_username": "azureuser",
+        "azure_tags": {
+        "dept": "web",
+        "type": "nginx"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+      "sudo apt-get update",
+      "sudo apt-get install -y nginx"
+      ]
+    }
+  ]
+}

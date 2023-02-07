@@ -1,0 +1,26 @@
+- name: Install PHP, Nginx and MySQL
+  hosts: all
+  become: yes
+  
+  tasks:
+    - name: Install Nginx
+      when: "'webserver' in devops-packer"
+      apt: name=nginx state=installed
+  
+- name: Clone repository from GitHub
+  hosts: appserver:webserver
+  become: yes
+  
+  tasks:
+    - name: Clone repository
+      git:
+        repo: https://github.com/Fanny-gutting/devops-front.git
+        dest: /var/www/devops-front
+        version: master
+        
+    - name: Set ownership and permissions
+      file:
+        path: /var/www/devops-front
+        owner: www-data
+        group: www-data
+        mode: 0755

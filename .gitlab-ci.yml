@@ -1,0 +1,22 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - packer build ./packer/main.json
+  artifacts:
+    paths:
+      - build-image.qcow2
+
+deploy:
+  stage: deploy
+  script:
+    - ansible-playbook ./ansible/playbook.yml
+    - terraform init
+    - terraform apply
+  dependencies:
+    - build
+  only:
+    - master
